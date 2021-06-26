@@ -1,5 +1,7 @@
 import 'dotenv/config';
 
+import { resolve } from 'path';
+
 import Youch from 'youch';
 import express from 'express';
 import 'express-async-errors';
@@ -19,6 +21,10 @@ class App {
 
   middlewares() {
     this.server.use(express.json());
+    this.server.use(
+      '/files',
+      express.static(resolve(__dirname, '..', 'tmp', 'uploads'))
+    );
   }
 
   routes() {
