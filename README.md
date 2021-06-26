@@ -1,12 +1,29 @@
-# Barber Shop Web:barber:
+# Barber Shop:barber:
 
 Appointments Scheduler Manager
 
 ## Description
 
-Allow users to create a scheduler appointments.
+Allows the user to schedule their time.
+Allows the providers to manager user appointments.
 
-Allow providers to manager this appointments.
+## Built With
+
+Server
+
+```
+- NodeJs
+- Express
+- Mongo
+- MySQL
+```
+
+Web
+
+```
+- ReactJs
+- Redux
+```
 
 ## Getting Started
 
@@ -29,7 +46,3 @@ Rafael Medeiros
 Barber Shop is MIT-licensed.
 
 - https://gist.github.com/fvcproductions/1bfc2d4aecb01a834b46)
-
-```
-
-```
