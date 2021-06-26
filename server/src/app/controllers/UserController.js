@@ -3,54 +3,61 @@ import isValidUser from '../valitadors/userValidation';
 
 class UserController {
   async store(req, res) {
-    try {
-      if (!(await isValidUser(req.body))) {
-        return res.status(400).json({ error: 'Invalid data' });
-      }
+    if (!(await isValidUser(req.body))) {
+      return res.status(400).json({ error: 'Invalid data' });
+    }
 
-      const userExists = await User.findOne({
-        where: { email: req.body.email },
-      });
+    const userExists = await User.findOne({
+      where: { email: req.body.email },
+    });
+
+    if (userExists) {
+      return res.status(400).json({ error: 'User already exists.' });
+    }
+
+    const { id, name, email, provider } = await User.create(req.body);
+
+    return res.json({
+      id,
+      name,
+      email,
+      provider,
+    });
+  }
+
+  async index(req, res) {
+    return res.json('');
+  }
+
+  async list(req, res) {
+    return res.json('');
+  }
+
+  async update(req, res) {
+    const { email, oldPassword } = req.body;
+
+    const user = await User.findByPk(req.userId);
+
+    if (email && email !== user.email) {
+      const userExists = await User.findOne({ where: { email } });
 
       if (userExists) {
         return res.status(400).json({ error: 'User already exists.' });
       }
-
-      const { id, name, email, provider } = await User.create(req.body);
-
-      return res.json({
-        id,
-        name,
-        email,
-        provider,
-      });
-    } catch (err) {
-      return res.status(401).json({ error: err.message });
     }
-  }
 
-  async index(req, res) {
-    try {
-      return res.json('');
-    } catch (err) {
-      return res.status(401).json('');
+    if (oldPassword && !(await user.checkPassword(oldPassword))) {
+      return res.status(401).json({ error: 'Password does not match' });
     }
-  }
 
-  async list(req, res) {
-    try {
-      return res.json('');
-    } catch (err) {
-      return res.status(401).json('');
-    }
-  }
+    const { id, name, provider } = await user.update(req.body);
 
-  async update(req, res) {
-    try {
-      return res.json('');
-    } catch (err) {
-      return res.status(401).json('');
-    }
+    return res.json({
+      id,
+      name,
+      email,
+      provider,
+    });
   }
 
   async delete(req, res) {
