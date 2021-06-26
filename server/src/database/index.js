@@ -24,7 +24,11 @@ class Database {
         console.log('Postgres Unable Connect to the Database', err)
       );
 
-    models.map((model) => model.init(this.connection));
+    models
+      .map((model) => model.init(this.connection))
+      .map(
+        (model) => model.associate && model.associate(this.connection.models)
+      );
   }
 }
 
