@@ -3,7 +3,7 @@ import jwt from 'jsonwebtoken';
 import authCofing from '../../config/auth';
 import User from '../models/User';
 
-import isValidSession from '../valitadors/SessionValidation';
+import isValidSession from '../valitadors/sessionValidation';
 
 class SessionController {
   async store(req, res) {
