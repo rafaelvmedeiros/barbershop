@@ -5,6 +5,7 @@ Appointments Scheduler Manager
 ## Description
 
 Allows the user to schedule their time.
+
 Allows the providers to manager user appointments.
 
 ## Built With
