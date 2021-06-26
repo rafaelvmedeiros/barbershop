@@ -1,10 +1,14 @@
 import User from '../models/User';
-import isValidUser from '../valitadors/userValidation';
+
+import {
+  isValidUserCreateSchema,
+  isValidUserUpdateSchema,
+} from '../valitadors/userValidation';
 
 class UserController {
   async store(req, res) {
-    if (!(await isValidUser(req.body))) {
-      return res.status(400).json({ error: 'Invalid data' });
+    if (!(await isValidUserCreateSchema(req.body))) {
+      return res.status(400).json({ error: 'Validation fails' });
     }
 
     const userExists = await User.findOne({
@@ -35,6 +39,10 @@ class UserController {
 
   async update(req, res) {
     const { email, oldPassword } = req.body;
+
+    if (!(await isValidUserUpdateSchema(req.body))) {
+      return res.status(400).json({ error: 'Validation fails' });
+    }
 
     const user = await User.findByPk(req.userId);
 
