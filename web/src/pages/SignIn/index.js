@@ -1,5 +1,5 @@
 import React from 'react';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { Formik } from 'formik';
 
@@ -11,8 +11,7 @@ import { signInRequest } from '../../store/modules/auth/actions';
 
 function SignIn() {
   const dispatch = useDispatch();
-
-  const authenticateUser = async () => {};
+  const { loading } = useSelector(state => state.auth);
 
   return (
     <>
@@ -73,7 +72,7 @@ function SignIn() {
             />
             <p> {errors.password && touched.password && errors.password}</p>
             <button type="submit" disabled={isSubmitting}>
-              Sign In
+              {loading ? 'Waiting...' : 'Log In'}
             </button>
 
             <Link to="/register">Register For Free</Link>

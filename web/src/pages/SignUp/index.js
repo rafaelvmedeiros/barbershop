@@ -103,9 +103,9 @@ function SignUp() {
                 errors.confirmPassword}
             </p>
             <button type="submit" disabled={isSubmitting}>
-              Sign Up
+              Create Account
             </button>
-            <Link to="/">Have an Account? Sign In</Link>
+            <Link to="/">Have an Account? Log In</Link>
           </Form>
         )}
       </Formik>
