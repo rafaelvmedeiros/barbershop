@@ -1,4 +1,5 @@
-import React, { useState } from 'react';
+import React from 'react';
+import { useDispatch } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { Formik } from 'formik';
 
@@ -6,7 +7,11 @@ import { Form } from './styles';
 
 import logo from '../../assets/logo.svg';
 
+import { signInRequest } from '../../store/modules/auth/actions';
+
 function SignIn() {
+  const dispatch = useDispatch();
+
   const authenticateUser = async () => {};
 
   return (
@@ -32,9 +37,9 @@ function SignIn() {
 
           return errors;
         }}
-        onSubmit={(values, { setSubmitting }) => {
+        onSubmit={({ email, password }, { setSubmitting }) => {
           setTimeout(() => {
-            alert(JSON.stringify(values, null, 2));
+            dispatch(signInRequest(email, password));
             setSubmitting(false);
           }, 400);
         }}
