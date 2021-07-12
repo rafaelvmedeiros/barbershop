@@ -1,4 +1,5 @@
 import React from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { Formik } from 'formik';
 
@@ -6,8 +7,11 @@ import { Form } from './styles';
 
 import logo from '../../assets/logo.svg';
 
+import { signUpRequest } from '../../store/modules/auth/actions';
+
 function SignUp() {
-  const createAccount = () => {};
+  const dispatch = useDispatch();
+  const { loading } = useSelector(state => state.auth);
 
   return (
     <>
@@ -45,9 +49,12 @@ function SignUp() {
 
           return errors;
         }}
-        onSubmit={(values, { setSubmitting }) => {
+        onSubmit={(
+          { name, email, password, confirmPassword },
+          { setSubmitting }
+        ) => {
           setTimeout(() => {
-            alert(JSON.stringify(values, null, 2));
+            dispatch(signUpRequest(name, email, password, confirmPassword));
             setSubmitting(false);
           }, 400);
         }}
@@ -103,7 +110,7 @@ function SignUp() {
                 errors.confirmPassword}
             </p>
             <button type="submit" disabled={isSubmitting}>
-              Create Account
+              {loading ? 'Waiting...' : 'Create Account'}
             </button>
             <Link to="/">Have an Account? Log In</Link>
           </Form>
